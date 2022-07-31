@@ -1,11 +1,15 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
 
 module.exports = {
     mode:"development",
     entry: path.resolve(__dirname, '../src/index.js'),
     output: {
       path: path.resolve(__dirname, './public'),
-      filename: 'bundle.js',
+      filename: '[name][contenthash].js',
+      clean: true,
+      assetModuleFilename: '[name][ext]'
     },
     devServer: {
         // 静态文件目录
@@ -15,6 +19,8 @@ module.exports = {
     
         compress: true,
         port: 8080, // default 8000
+        open: true,
+        hot: true,
 
       },
   module: {
@@ -41,9 +47,24 @@ module.exports = {
           "less-loader",
         ],
       },
+      {
+        test: /\.(svg|png|jpg)$/,
+        type: 'asset/resource', 
+      },
     ]
   },
   resolve: {
-    extensions: ['*', '.js','jsx']
+    extensions: ['*', '.js','.jsx'],
+    mainFiles:  ["index"]
   },
+  plugins: [
+    new HtmlWebpackPlugin(
+      {title: "BI System",
+      filename: 'index.html',
+      template: 'public/index.html'
+
+      }
+    )
+  ]
+  
 }

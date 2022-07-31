@@ -1,3 +1,38 @@
+@border-color:        #e7e7eb; 
 .MainPage{
+    display: flex;
+    .graphContainer{
+        flex:4;
+    }
+}
 
+
+.DataSelectSideBar{
+    flex:1;
+    border-right: 1px solid @border-color;
+    font-size: 16px;
+    .dataBaseInfoWrapper{
+        padding: 8px 10px;
+        border-bottom: 1px solid @border-color;
+        .dataBaseInfoTop{
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 20px;
+            font-weight: 700;
+        }
+    }
+    border-bottom: 1px solid @border-color;
+    .searchBoxWrapper{
+        width: 100%;
+        padding: 5px 10px;
+
+        .searchBox{   
+            width: 100%;
+            border: none; 
+            height: 28px;
+        }
+        border-bottom: 1px solid @border-color;
+
+    }
+    
 }

@@ -1,0 +1,30 @@
+@border-color:        #e7e7eb; 
+.ValueListBar{
+    width: 100%;
+    padding: 8px 10px;
+    padding-bottom: 0px;
+    border-bottom: 1px solid @border-color;
+    .titleContainer{
+        font-weight: 700;
+        padding-bottom: 8px;
+    }
+    
+    .valueContainer{
+        height: 350px;
+        overflow: scroll;
+        
+        ol{
+            list-style: none;
+            padding-inline-start: 10px;
+            li{
+                display: flex;
+                height: 36px;
+                .iconContainer{
+                    margin-right: 10px;
+                }
+            }
+
+        }
+        
+    }
+}
