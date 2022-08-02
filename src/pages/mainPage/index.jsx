@@ -6,7 +6,7 @@ import ValueListBar from './component/valueListBar';
 import { valueList } from '../../models/fakeData';
 import GraphSettingSideBar from './component/graphSettingSideBar';
 import { tableImgList } from '../../assets/tableIcons';
-import { flushSync } from 'react-dom';
+
 
 export default function MainPage(ref) {
   const [dimension, setDimension] = useState("");
