@@ -5,6 +5,7 @@ import { Input } from 'antd';
 import ValueListBar from './component/valueListBar';
 import { valueList } from '../../models/fakeData';
 import GraphSettingSideBar from './component/graphSettingSideBar';
+import { tableImgList } from '../../assets/tableIcons';
 
 export default function MainPage() {
   return (
@@ -26,7 +27,7 @@ export default function MainPage() {
         <ValueListBar title="维度" valueList={valueList}/>
         <ValueListBar title="指标" valueList={valueList}/>
     </div>
-      <GraphSettingSideBar/>
+      <GraphSettingSideBar imgList={tableImgList}/>
       <div className="graphContainer">SADSDÅ</div>
     </div>
   )
