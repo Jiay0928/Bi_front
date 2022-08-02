@@ -2,7 +2,7 @@ import React from 'react';
 import  "./index.less";
 import {BarsOutlined} from '@ant-design/icons';
 
-export default function ValueListBar({title, valueList }) {
+export default function ValueListBar({title, valueList,clickAction}) {
   return (
     <div className='ValueListBar'>
       <div className="titleContainer">
@@ -11,7 +11,7 @@ export default function ValueListBar({title, valueList }) {
       <div className="valueContainer">
         <ol>
         {valueList.map((value, index) => 
-          <li key={index}> 
+          <li key={index} onClick={()=>clickAction(value)}> 
             <div className='iconContainer'>
               <BarsOutlined style={{ fontSize: '20px', color: '#3467eb' }}/>
             </div>
