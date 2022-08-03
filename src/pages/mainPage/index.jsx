@@ -3,14 +3,17 @@ import  "./index.less";
 import { FileAddOutlined, SettingOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
 import ValueListBar from './component/valueListBar';
-import { valueList } from '../../models/fakeData';
+import { valueList, dataList } from '../../models/fakeData';
 import GraphSettingSideBar from './component/graphSettingSideBar';
 import { tableImgList } from '../../assets/tableIcons';
+import ValueTable from './component/valueTable';
+import {dimensionToColumn, dataToRow} from "./../../util/util";
 
 
 export default function MainPage(ref) {
   const [dimension, setDimension] = useState("");
-  const [index, setIndex] = useState([]);
+  const [matric, setmatric] = useState([]);
+  const [graphType, setGraphType] = useState(0);
 
   let createValueContainer = (value, isDim) => {
     if (value === ""){
@@ -26,7 +29,7 @@ export default function MainPage(ref) {
     if (isDim) {
       setDimension("");
     }else {
-      setIndex(index.filter((v)=> {return (v !== value);}))
+      setmatric(matric.filter((v)=> {return (v !== value);}))
     }
 
   }
@@ -36,13 +39,20 @@ export default function MainPage(ref) {
       return (value) => setDimension(value);
     }else{
       return (value) => {
-        if (index.includes(value)){
+        if (matric.includes(value)){
           return;
         }
-        setIndex([...index,value])};
+        setmatric([...matric,value])};
     }
   }
-
+  let switchDataType = () => {
+    switch(graphType){
+      case 0: 
+        return <ValueTable columnNames={dimensionToColumn([dimension, ...matric])} dataList={dataToRow(dataList, [dimension, ...matric])}/> ;
+      default:
+        return <></>;
+    }
+  }
   return (
     <div className="MainPage">
       <div className="DataSelectSideBar"> 
@@ -61,26 +71,30 @@ export default function MainPage(ref) {
         </div>
         <ValueListBar title="维度" valueList={valueList} clickAction={valueAddingHandler(true)}/>
         <ValueListBar title="指标" valueList={valueList} clickAction={valueAddingHandler(false)}/>
-    </div>
-      <GraphSettingSideBar imgList={tableImgList}/>
-      <div className="graphContainer">
-        <div className='SelectedValueContainer'>
-          <div className="valueWrapper">
-            <div className='valueNameContainer'>
-                 维度 <SettingOutlined style={{fontWeight: 700, paddingLeft:4}}/>
-            </div>
-            {createValueContainer(dimension, true)}
-            
-          </div>
-          <div className="valueWrapper">
-          <div className='valueNameContainer'>
-                指标 <SettingOutlined style={{fontWeight: 700, paddingLeft:4}}/>
-            </div>
-            {index.map((value)=> createValueContainer(value, false))}
-          </div>
+       </div>
+          <GraphSettingSideBar imgList={tableImgList} selectedGraphIndex={graphType} setSelectedGraphIndex={setGraphType}/>
+          <div className="rightContainer">
+            <div className='SelectedValueContainer'>
+              <div className="valueWrapper">
+                <div className='valueNameContainer'>
+                     维度 <SettingOutlined style={{fontWeight: 700, paddingLeft:4}}/>
+                </div>
+                {createValueContainer(dimension, true)}  
+              </div>
+              <div className="valueWrapper">
+              <div className='valueNameContainer'>
+                    指标 <SettingOutlined style={{fontWeight: 700, paddingLeft:4}}/>
+                </div>
+                {matric.map((value)=> createValueContainer(value, false))}
+              </div>
 
+            </div>
+            <div className="graphContainer">
+            { (dimension !== "") && (matric.length !== 0) &&
+              switchDataType()
+            }
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
   )
 }

@@ -2,11 +2,11 @@ import React from 'react';
 import "./index.less";
 import { useState } from 'react';
 
-export default function GraphSettingSideBar({imgList}) {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+export default function GraphSettingSideBar({imgList,selectedGraphIndex, setSelectedGraphIndex}) {
+  // const [selectedIndex, setSelectedIndex] = useState(0);
   let graphButtonCreator = (img, index, graphType) => {
-      return <div className={"graphButton " + ((selectedIndex === index)? "selectedButton" : "") }
-             onClick={()=>setSelectedIndex(index)}>
+      return <div className={"graphButton " + ((selectedGraphIndex === index)? "selectedButton" : "") }
+             onClick={()=>setSelectedGraphIndex(index)}>
         <img src={img} alt={graphType} />
       </div>
   }
