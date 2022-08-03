@@ -1,13 +1,15 @@
 import React from 'react';
 import "./index.less";
-import { useState } from 'react';
+import { Tooltip } from 'antd';
+import {graphName} from "./../../../../models/common"
 
 export default function GraphSettingSideBar({imgList,selectedGraphIndex, setSelectedGraphIndex}) {
-  // const [selectedIndex, setSelectedIndex] = useState(0);
-  let graphButtonCreator = (img, index, graphType) => {
+  let graphButtonCreator = (img, index) => {
       return <div className={"graphButton " + ((selectedGraphIndex === index)? "selectedButton" : "") }
              onClick={()=>setSelectedGraphIndex(index)}>
-        <img src={img} alt={graphType} />
+        <Tooltip title={graphName[index]}>
+        <img src={img} alt={graphName[index]} />
+        </Tooltip>
       </div>
   }
 
@@ -18,7 +20,7 @@ export default function GraphSettingSideBar({imgList,selectedGraphIndex, setSele
       </div>
       <div className="graphButtonContainer">
         {imgList.map((img, index) =>  
-           graphButtonCreator(img, index, "tableTypes"))}
+           graphButtonCreator(img, index))}
 
       </div>
         
