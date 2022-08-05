@@ -1,20 +1,28 @@
 import React, {useState, useRef, useImperativeHandle} from 'react';
 import  "./index.less";
-import { FileAddOutlined, SettingOutlined, CloseCircleOutlined } from '@ant-design/icons';
-import { Input } from 'antd';
+import { FileAddOutlined, SettingOutlined, CloseCircleOutlined, SearchOutlined } from '@ant-design/icons';
+import { Input, Button } from 'antd';
 import ValueListBar from './component/valueListBar';
 import { valueList, dataList } from '../../models/fakeData';
 import GraphSettingSideBar from './component/graphSettingSideBar';
 import { tableImgList } from '../../assets/tableIcons';
 import ValueTable from './component/valueTable';
 import {dimensionToColumn, dataToRow} from "./../../util/util";
+import ValueGraph from './component/valueGraph';
 
 
 export default function MainPage(ref) {
   const [dimension, setDimension] = useState("");
   const [matric, setmatric] = useState([]);
   const [graphType, setGraphType] = useState(0);
-
+  const [allDimensions, setAllDimensions] = useState(valueList);
+  const [allMatrics, setMatrics] = useState(valueList);
+  const [shownDimensions, setShownDimensions] = useState(valueList);
+  const [shownMatrics, setShownMatrics] = useState(valueList);
+  const [tableVisible, setTableVisible] = useState(false);
+  
+  
+  // handle selected values
   let createValueContainer = (value, isDim) => {
     if (value === ""){
       return <></>
@@ -45,14 +53,37 @@ export default function MainPage(ref) {
         setmatric([...matric,value])};
     }
   }
-  let switchDataType = () => {
+
+  // handle graph
+  let graphCreator = () => {
     switch(graphType){
       case 0: 
         return <ValueTable columnNames={dimensionToColumn([dimension, ...matric])} dataList={dataToRow(dataList, [dimension, ...matric])}/> ;
       default:
-        return <></>;
+        return <ValueGraph/>
     }
   }
+
+  // handle input search bar
+   let searchMethod = (e) => {
+        let value = e.target.value;
+        setShownDimensions(allDimensions.filter((str)=>(str.includes(value))));
+        setShownMatrics(allMatrics.filter((str) => 
+          str.includes(value)
+        ))
+   }
+
+  //  handle if table is visible 
+  let tableVisibilityHandler = () => {
+    if ((dimension !== "") && (matric.length !== 0)){
+      setTableVisible(true);
+      
+    }else{
+      setTableVisible(false);
+    }
+
+  }
+
   return (
     <div className="MainPage">
       <div className="DataSelectSideBar"> 
@@ -64,13 +95,12 @@ export default function MainPage(ref) {
             <div>
                 DataBase Name
             </div>
-            
         </div>
         <div className='searchBoxWrapper'>
-            <Input className='searchBox' placeholder="输入关键词搜索" />
+            <Input className='searchBox' placeholder="输入关键词搜索" onChange={searchMethod}/>
         </div>
-        <ValueListBar title="维度" valueList={valueList} clickAction={valueAddingHandler(true)}/>
-        <ValueListBar title="指标" valueList={valueList} clickAction={valueAddingHandler(false)}/>
+        <ValueListBar title="维度" valueList={shownDimensions} clickAction={valueAddingHandler(true)}/>
+        <ValueListBar title="指标" valueList={shownMatrics} clickAction={valueAddingHandler(false)}/>
        </div>
           <GraphSettingSideBar imgList={tableImgList} selectedGraphIndex={graphType} setSelectedGraphIndex={setGraphType}/>
           <div className="rightContainer">
@@ -90,8 +120,11 @@ export default function MainPage(ref) {
 
             </div>
             <div className="graphContainer">
-            { (dimension !== "") && (matric.length !== 0) &&
-              switchDataType()
+              <Button className='searchButton' onClick={tableVisibilityHandler}>
+                <SearchOutlined /> 查询
+              </Button>
+            {tableVisible  &&
+              graphCreator()
             }
             </div>
           </div>
