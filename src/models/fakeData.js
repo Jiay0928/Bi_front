@@ -1,42 +1,58 @@
 let graphIconUrl = "https://www.iconfont.cn/collections/detail?spm=a313x.7781069.0.da5a778a4&cid=11859";
-export let valueList = ["name", "age", "address", "tags"];
+export let valueList = ["name", "age","salary"];
 
 export let dataList = [
     {
         name: 'John Brown',
         age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
+        salary: 1000,
+        
       },
       {
         name: 'Jim Green',
         age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
+        salary: 100,
+        
       },
       {
         name: 'Joe Black',
         age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
+        salary: 1000,
+       
       },
       {
-        name: 'John Brown',
+        name: 'John Brown1',
         age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
+        salary: 1000,
+        
       },
       {
-        name: 'Jim Green',
+        name: 'Jim Green1',
         age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
+        salary: 1000,
+        
       },
       {
-        name: 'Joe Black',
+        name: 'Joe Black1',
         age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
+        salary: 1000,
+        
       },
 
 ];
+
+export const options = {
+  xAxis: {
+    type: 'category',
+    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  },
+  yAxis: {
+    type: 'value'
+  },
+  series: [
+    {
+      data: [120, 200, 150, 80, 70, 110, 130],
+      type: 'pie'
+    }
+  ]
+};

@@ -5,11 +5,11 @@ import {graphName} from "./../../../../models/common"
 
 export default function GraphSettingSideBar({imgList,selectedGraphIndex, setSelectedGraphIndex}) {
   let graphButtonCreator = (img, index) => {
-      return <div className={"graphButton " + ((selectedGraphIndex === index)? "selectedButton" : "") }
+      return <div key={index} className={"graphButton " + ((selectedGraphIndex === index)? "selectedButton" : "") }
              onClick={()=>setSelectedGraphIndex(index)}>
-        <Tooltip title={graphName[index]}>
-        <img src={img} alt={graphName[index]} />
-        </Tooltip>
+          <Tooltip title={graphName[index]}>
+          <img src={img} alt={graphName[index]} />
+          </Tooltip>
       </div>
   }
 

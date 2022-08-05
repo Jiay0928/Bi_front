@@ -22,3 +22,4 @@ export function dataToRow(data, dimensionList){
         return result;
     } )
 }
+

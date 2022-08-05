@@ -3,12 +3,13 @@ import  "./index.less";
 import { FileAddOutlined, SettingOutlined, CloseCircleOutlined, SearchOutlined } from '@ant-design/icons';
 import { Input, Button } from 'antd';
 import ValueListBar from './component/valueListBar';
-import { valueList, dataList } from '../../models/fakeData';
+import { valueList, dataList, options } from '../../models/fakeData';
 import GraphSettingSideBar from './component/graphSettingSideBar';
 import { tableImgList } from '../../assets/tableIcons';
 import ValueTable from './component/valueTable';
 import {dimensionToColumn, dataToRow} from "./../../util/util";
 import ValueGraph from './component/valueGraph';
+import GraphDataFormater from './../../util/graphDataFormater';
 
 
 export default function MainPage(ref) {
@@ -20,6 +21,7 @@ export default function MainPage(ref) {
   const [shownDimensions, setShownDimensions] = useState(valueList);
   const [shownMatrics, setShownMatrics] = useState(valueList);
   const [tableVisible, setTableVisible] = useState(false);
+  
   
   
   // handle selected values
@@ -54,13 +56,15 @@ export default function MainPage(ref) {
     }
   }
 
-  // handle graph
+  // handle grap rendering
   let graphCreator = () => {
+    let graphDataFormater = new GraphDataFormater(dataList, matric, dimension);
     switch(graphType){
       case 0: 
         return <ValueTable columnNames={dimensionToColumn([dimension, ...matric])} dataList={dataToRow(dataList, [dimension, ...matric])}/> ;
       default:
-        return <ValueGraph/>
+        let option = graphDataFormater.toBarGraph();
+        return <ValueGraph graphOption={option}/>
     }
   }
 
