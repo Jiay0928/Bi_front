@@ -1,14 +1,30 @@
 @border-color:        #e7e7eb; 
+.ant-tabs-nav-list{
+    padding-left: 20px;
+    padding-right: 20px;
+    .ant-tabs-tab{
+        margin-right: 20px;
+        font-weight: 600;
+        
+    }
+
+}
+
 .GraphSettingSideBar{
     flex:1;
     padding-top: 20px;
     border-right: 1px solid @border-color;
-    .titleContainer{
-        font-weight: 700;
-        padding-left: 32px;
-        padding-bottom: 23px;
+    .valueWrapper{
+        display: flex;
+        padding: 8px;
         border-bottom: 1px solid @border-color;
-
+        .valueTitle{
+            padding-left: 4px;
+            
+            width: 50%;
+            
+        }
+        
     }
     .graphButtonContainer{
         width: 100%;

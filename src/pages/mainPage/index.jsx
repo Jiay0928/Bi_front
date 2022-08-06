@@ -124,7 +124,7 @@ export default function MainPage(ref) {
         <ValueListBar title="维度" valueList={shownDimensions} clickAction={valueAddingHandler(true)}/>
         <ValueListBar title="指标" valueList={shownMatrics} clickAction={valueAddingHandler(false)}/>
        </div>
-          <GraphSettingSideBar imgList={tableImgList} selectedGraphIndex={graphType} setSelectedGraphIndex={setGraphType}/>
+          <GraphSettingSideBar imgList={tableImgList} selectedGraphIndex={graphType} setSelectedGraphIndex={setGraphType} analysisData={{sum: 100}}/>
           <div className="rightContainer">
             <div className='SelectedValueContainer'>
               <div className="valueWrapper">

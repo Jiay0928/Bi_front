@@ -193,17 +193,16 @@ export default class GraphDataFormater{
             type: 'value'
           }
         ],
-        series:
-        
-        isPercent? 
-        this._getStackedPercentData(
-          'line',{
-            stack: 'Total',
-            areaStyle: {},
-            emphasis: {
-              focus: 'series'
-            },
-          }
+        series: 
+          isPercent? 
+          this._getStackedPercentData(
+            'line',{
+              stack: 'Total',
+              areaStyle: {},
+              emphasis: {
+                focus: 'series'
+              },
+            }
         )
         
       :
