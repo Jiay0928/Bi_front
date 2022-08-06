@@ -59,12 +59,28 @@ export default function MainPage(ref) {
   // handle grap rendering
   let graphCreator = () => {
     let graphDataFormater = new GraphDataFormater(dataList, matric, dimension);
+    let option;
     switch(graphType){
       case 0: 
         return <ValueTable columnNames={dimensionToColumn([dimension, ...matric])} dataList={dataToRow(dataList, [dimension, ...matric])}/> ;
-      default:
-        let option = graphDataFormater.toBarGraph();
+      case 1:
+        option = graphDataFormater.toGraphData("bar");
         return <ValueGraph graphOption={option}/>
+        case 2:
+          option = graphDataFormater.toGraphData("stackedArea");
+          return <ValueGraph graphOption={option}/>
+      case 3:
+        option = graphDataFormater.toGraphData("line");
+        return <ValueGraph graphOption={option}/>
+        case 4:
+          option = graphDataFormater.toGraphData("pie");
+          return <ValueGraph graphOption={option}/>
+          case 5:
+            option = graphDataFormater.toGraphData("stackedBar");
+            return <ValueGraph graphOption={option}/>
+
+      default:
+        return <></>
     }
   }
 

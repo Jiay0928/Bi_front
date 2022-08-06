@@ -4,62 +4,202 @@ export default class GraphDataFormater{
         this.matricsList = matricsList;
         this.dimension = dimension;
     }
-    toBarGraph(){
-        let option = {
-           tooltip: {
-              trigger: 'axis',
-            }, 
-            grid: {
-              right: '20%'
-            },
-            toolbox: {
-              feature: {
-                dataView: { show: true, readOnly: false },
-                saveAsImage: { show: true }
-              }
-            },
-            legend: {
-              data: this.dimension,
-            },
-            xAxis: [
-              {
-                type: 'category',
-                axisTick: {
-                  alignWithLabel: true
-                },
-                // prettier-ignore
-                data: this.dataList.map((value) => value[this.dimension]),
-              }
-            ],
-            yAxis: 
-              {
-                type: 'value',
-                alignTicks: true,
-                axisLine: {
-                  show: true,
-                  lineStyle: {
-                    color: '#737373',
-                  }
-                },
-                axisLabel: {
-                  formatter: '{value}'
-                }
-              },
-              
-            series: 
+    toGraphData(graphType){
+        switch (graphType){
+          case 'line': case 'bar': 
+            return this._toLineBarGraphData(graphType, false);
+          case 'pie':
+            return this._toPieGraph();
+          case 'stackedArea':
+            return this._toStackedAreaGraph();
+          case 'stackedBar':
+            return this._toLineBarGraphData('bar',true);
 
-              this.matricsList.map((value) => {
-                let result = {
-                    name: value,
-                    
-                    data: this.dataList.map(data=> data[value]),
-                    type: 'bar', 
-                }
-                return result;
-              })
+          default:
+            return;
+        }
+          
+    }
+
+    _getStackedBarPercentData(){
+        return this.matricsList.map((value) => {
+          let result = {
+              notMerge: true,
+              name: value,
+              stack:'ad',
+              data: this.dataList.map(data => {
+                let sum = this.matricsList.reduce(
+                  (previousValue,currentValue) => data[previousValue] + data[currentValue]);
+                let res = data[value]/sum;
+                return res.toFixed(2);
+                }),
+              type: 'bar',
+               
+          }
+          return result;
+        })
+    }
+    _getSeries = (graphType,option) => {
+      return this.matricsList.map((value) => {
+        let result = {
+            name: value,
+            data: this.dataList.map(data=> data[value]),
+            type: graphType,
+            ...option
+             
+        }
+        return result;
+      })
+    }
+    
+    _toLineBarGraphData(graphType, isStacked){
+      
+      let option = {
+        notMerge: true,
+        tooltip: {
+           trigger: 'axis',
+         }, 
+         grid: {
+           right: '20%'
+         },
+         toolbox: {
+           feature: {
+             saveAsImage: { show: true }
+           }
+         },
+         legend: {
+           data: this.matricsList,
+         },
+         xAxis: [
+           {
+             type: 'category',
+             axisTick: {
+               alignWithLabel: true
+             },
+             // prettier-ignore
+             data: this.dataList.map((value) => value[this.dimension]),
+           }
+         ],
+         yAxis: 
+           {
+             type: 'value',
+             alignTicks: true,
+             axisLine: {
+               show: true,
+               lineStyle: {
+                 color: '#737373',
+               }
+             },
+             axisLabel: {
+               formatter: '{value}'
+             }
+           },
+           
+         series: isStacked? this._getStackedBarPercentData() : this._getSeries(graphType)
+           
+          
+       };
+       return option;
+      
+    }
+    
+
+    _toPieGraph(){
+      let option = {
+        notMerge: true,
+        title: {
+          text: `${this.matricsList[0]}饼图`,
+          left: 'center'
+        },
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          orient: 'vertical',
+          left: 'left',
+
+          
+        },
+        series:
+          {
+            name: 'Access From',
+            type: 'pie',
+            radius: '50%',
+            data: 
+            this.dataList.map(
+              (data) => {
+                let res = {
+                  value: data[this.matricsList[0]],
+                  name: data[this.dimension],
+                };
+                return res;
+                
+              }
+            )
             
-          };
-          return option;
-
+            ,
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        
+      }
+      return option;
+    }
+    _toStackedAreaGraph(){
+      
+      let option = {
+        notMerge: true,
+        
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          }
+        },
+        legend: {
+          data: this.matricsList,
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {}
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            boundaryGap: false,
+            data: this.dataList.map((value) => value[this.dimension]),
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value'
+          }
+        ],
+        series:this._getSeries(
+          'line',{
+            stack: 'Total',
+            areaStyle: {},
+            emphasis: {
+              focus: 'series'
+            },
+          }
+        )
+      };
+      return option;
     }
 }
