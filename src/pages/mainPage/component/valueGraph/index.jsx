@@ -14,6 +14,6 @@ export default function ValueGraph({graphOption}) {
     }, [])
     
   return (
-    <ReactEcharts ref={chartRef} option={graphOption} />
+    <ReactEcharts style={{height: '500px'}} ref={chartRef} option={graphOption} />
   );
 }

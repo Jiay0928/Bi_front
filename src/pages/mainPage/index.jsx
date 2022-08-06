@@ -62,22 +62,22 @@ export default function MainPage(ref) {
     let option;
     switch(graphType){
       case 0: 
-        return <ValueTable columnNames={dimensionToColumn([dimension, ...matric])} dataList={dataToRow(dataList, [dimension, ...matric])}/> ;
+        return <ValueTable key={0} columnNames={dimensionToColumn([dimension, ...matric])} dataList={dataToRow(dataList, [dimension, ...matric])}/> ;
       case 1:
         option = graphDataFormater.toGraphData("bar");
-        return <ValueGraph graphOption={option}/>
+        return <ValueGraph key={1} graphOption={option}/>
         case 2:
           option = graphDataFormater.toGraphData("stackedArea");
-          return <ValueGraph graphOption={option}/>
+          return <ValueGraph key={2} graphOption={option}/>
       case 3:
         option = graphDataFormater.toGraphData("line");
-        return <ValueGraph graphOption={option}/>
+        return <ValueGraph key={3} graphOption={option}/>
         case 4:
           option = graphDataFormater.toGraphData("pie");
-          return <ValueGraph graphOption={option}/>
+          return <ValueGraph key={4} graphOption={option}/>
           case 5:
             option = graphDataFormater.toGraphData("stackedBar");
-            return <ValueGraph graphOption={option}/>
+            return <ValueGraph key={5} graphOption={option}/>
 
       default:
         return <></>
