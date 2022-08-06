@@ -11,9 +11,11 @@ export default class GraphDataFormater{
           case 'pie':
             return this._toPieGraph();
           case 'stackedArea':
-            return this._toStackedAreaGraph();
+            return this._toStackedAreaGraph(false);
           case 'stackedBar':
             return this._toLineBarGraphData('bar',true);
+            case 'stackedPercentArea':
+              return this._toStackedAreaGraph(true);
 
           default:
             return;
@@ -21,7 +23,7 @@ export default class GraphDataFormater{
           
     }
 
-    _getStackedBarPercentData(){
+    _getStackedPercentData(graphType, option){
         return this.matricsList.map((value) => {
           let result = {
               notMerge: true,
@@ -33,7 +35,8 @@ export default class GraphDataFormater{
                 let res = data[value]/sum;
                 return res.toFixed(2);
                 }),
-              type: 'bar',
+              type: graphType,
+              ...option
                
           }
           return result;
@@ -95,7 +98,7 @@ export default class GraphDataFormater{
              }
            },
            
-         series: isStacked? this._getStackedBarPercentData() : this._getSeries(graphType)
+         series: isStacked? this._getStackedPercentData('bar') : this._getSeries(graphType)
            
           
        };
@@ -150,7 +153,7 @@ export default class GraphDataFormater{
       }
       return option;
     }
-    _toStackedAreaGraph(){
+    _toStackedAreaGraph(isPercent){
       
       let option = {
         notMerge: true,
@@ -190,7 +193,21 @@ export default class GraphDataFormater{
             type: 'value'
           }
         ],
-        series:this._getSeries(
+        series:
+        
+        isPercent? 
+        this._getStackedPercentData(
+          'line',{
+            stack: 'Total',
+            areaStyle: {},
+            emphasis: {
+              focus: 'series'
+            },
+          }
+        )
+        
+      :
+        this._getSeries(
           'line',{
             stack: 'Total',
             areaStyle: {},

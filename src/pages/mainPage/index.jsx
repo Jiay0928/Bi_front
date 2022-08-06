@@ -66,19 +66,21 @@ export default function MainPage(ref) {
       case 1:
         option = graphDataFormater.toGraphData("bar");
         return <ValueGraph key={1} graphOption={option}/>
-        case 2:
-          option = graphDataFormater.toGraphData("stackedArea");
-          return <ValueGraph key={2} graphOption={option}/>
+      case 2:
+        option = graphDataFormater.toGraphData("stackedArea");
+        return <ValueGraph key={2} graphOption={option}/>
       case 3:
         option = graphDataFormater.toGraphData("line");
         return <ValueGraph key={3} graphOption={option}/>
-        case 4:
-          option = graphDataFormater.toGraphData("pie");
-          return <ValueGraph key={4} graphOption={option}/>
-          case 5:
-            option = graphDataFormater.toGraphData("stackedBar");
-            return <ValueGraph key={5} graphOption={option}/>
-
+      case 4:
+        option = graphDataFormater.toGraphData("pie");
+        return <ValueGraph key={4} graphOption={option}/>
+      case 5:
+        option = graphDataFormater.toGraphData("stackedBar");
+        return <ValueGraph key={5} graphOption={option}/>
+      case 6:
+        option = graphDataFormater.toGraphData("stackedPercentArea");
+        return <ValueGraph key={6} graphOption={option}/>
       default:
         return <></>
     }
