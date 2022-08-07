@@ -7,6 +7,7 @@ import { valueList } from '../../models/fakeData';
 import GraphSettingSideBar from './component/graphSettingSideBar';
 import { tableImgList } from '../../assets/tableIcons';
 import { flushSync } from 'react-dom';
+import SelectDb from './component/selectDatabase/selectDb';
 
 export default function MainPage(ref) {
   const [dimension, setDimension] = useState("");
@@ -49,7 +50,7 @@ export default function MainPage(ref) {
         <div className='dataBaseInfoWrapper'>
             <div className='dataBaseInfoTop'>
                 数据集
-                <FileAddOutlined />
+                <SelectDb/>
             </div>
             <div>
                 DataBase Name
