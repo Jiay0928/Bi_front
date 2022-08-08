@@ -4,6 +4,8 @@ import { LaptopOutlined, NotificationOutlined, UserOutlined, SearchOutlined } fr
 import { Input, Layout, Menu, Select } from 'antd';
 import SelectTable from './selectTable';
 
+
+//选择数据表的页面
 const { Header, Content, Sider } = Layout;
 const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map((icon, index) => {
   const key = String(index + 1);
@@ -58,7 +60,7 @@ const TableList = () => (
             minHeight: 280,
           }}
         >
-          Content
+          key[items]
         </Content>
       </Layout>
     </Content>
