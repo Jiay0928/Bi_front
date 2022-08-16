@@ -1,9 +1,11 @@
-import React from 'react';
+import React,{useState} from 'react';
 import "./index.less";
 import { Tooltip, Tabs} from 'antd';
 import {graphName} from "./../../../../models/common";
+import {connect} from 'react-redux';
 
-export default function GraphSettingSideBar({imgList,selectedGraphIndex, setSelectedGraphIndex, analysisData}) {
+function GraphSettingSideBar({imgList,selectedGraphIndex, setSelectedGraphIndex, analysisData, functionList}) {
+  const [getAnalysis, setGetAnalysis] = useState(false);
   const { TabPane } = Tabs;
   let graphButtonCreator = (img, index) => {
       return <div key={index} className={"graphButton " + ((selectedGraphIndex === index)? "selectedButton" : "") }
@@ -12,6 +14,11 @@ export default function GraphSettingSideBar({imgList,selectedGraphIndex, setSele
           <img src={img} alt={graphName[index]} />
           </Tooltip>
       </div>
+  }
+
+  let clickHandler = () => {
+    
+
   }
   let valueContainerCreator = (title, key) => {
     return (
@@ -38,17 +45,22 @@ export default function GraphSettingSideBar({imgList,selectedGraphIndex, setSele
                    graphButtonCreator(img, index))}
 
               </div>
-                
-            
             </TabPane>
-           <TabPane tab="分析" key="2">
-             {valueContainerCreator("总和", 'sum')}
-             {valueContainerCreator("平均值", 'average')}
-             {valueContainerCreator("最大值", 'max')}
-             {valueContainerCreator("最小值", 'min')}
+           <TabPane tab="分析" key="2" onClick = {clickHandler}>
+             {functionList.map((value,index) => valueContainerCreator(value.name, index))}
              
            </TabPane>
        </Tabs>
     </div>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    functionList : state.dataBaseInfo.functionList
+  }
+}
+
+export default connect(mapStateToProps)(GraphSettingSideBar);
+
+

@@ -1,25 +1,23 @@
-import React, {useState, useRef, useImperativeHandle} from 'react';
+import React, {useState, useEffect} from 'react';
 import  "./index.less";
 import { FileAddOutlined, SettingOutlined, CloseCircleOutlined, SearchOutlined } from '@ant-design/icons';
 import { Input, Button } from 'antd';
 import ValueListBar from './component/valueListBar';
-import { valueList, dataList, options } from '../../models/fakeData';
 import GraphSettingSideBar from './component/graphSettingSideBar';
 import { tableImgList } from '../../assets/tableIcons';
-import ValueTable from './component/valueTable';
-import {dimensionToColumn, dataToRow} from "./../../util/util";
 import ValueGraph from './component/valueGraph';
-import GraphDataFormater from './../../util/graphDataFormater';
+import {connect} from 'react-redux';
+import {updateDatabaseInfo} from "./../../redux/action"
 
 
-export default function MainPage(ref) {
+function MainPage({dispatch, allDimensions,allMatrics}) {
   const [dimension, setDimension] = useState("");
   const [matric, setmatric] = useState([]);
+  const [graphingDim, setGraphingDim] = useState("");
+  const [graphingMatric, setGraphingMatric] = useState([]);
   const [graphType, setGraphType] = useState(0);
-  const [allDimensions, setAllDimensions] = useState(valueList);
-  const [allMatrics, setMatrics] = useState(valueList);
-  const [shownDimensions, setShownDimensions] = useState(valueList);
-  const [shownMatrics, setShownMatrics] = useState(valueList);
+  const [shownDimensions, setShownDimensions] = useState(allDimensions);
+  const [shownMatrics, setShownMatrics] = useState(allMatrics);
   const [tableVisible, setTableVisible] = useState(false);
   
   
@@ -55,36 +53,7 @@ export default function MainPage(ref) {
         setmatric([...matric,value])};
     }
   }
-
-  // handle grap rendering
-  let graphCreator = () => {
-    let graphDataFormater = new GraphDataFormater(dataList, matric, dimension);
-    let option;
-    switch(graphType){
-      case 0: 
-        return <ValueTable key={0} columnNames={dimensionToColumn([dimension, ...matric])} dataList={dataToRow(dataList, [dimension, ...matric])}/> ;
-      case 1:
-        option = graphDataFormater.toGraphData("bar");
-        return <ValueGraph key={1} graphOption={option}/>
-      case 2:
-        option = graphDataFormater.toGraphData("stackedArea");
-        return <ValueGraph key={2} graphOption={option}/>
-      case 3:
-        option = graphDataFormater.toGraphData("line");
-        return <ValueGraph key={3} graphOption={option}/>
-      case 4:
-        option = graphDataFormater.toGraphData("pie");
-        return <ValueGraph key={4} graphOption={option}/>
-      case 5:
-        option = graphDataFormater.toGraphData("stackedBar");
-        return <ValueGraph key={5} graphOption={option}/>
-      case 6:
-        option = graphDataFormater.toGraphData("stackedPercentArea");
-        return <ValueGraph key={6} graphOption={option}/>
-      default:
-        return <></>
-    }
-  }
+  
 
   // handle input search bar
    let searchMethod = (e) => {
@@ -98,7 +67,13 @@ export default function MainPage(ref) {
   //  handle if table is visible 
   let tableVisibilityHandler = () => {
     if ((dimension !== "") && (matric.length !== 0)){
-      setTableVisible(true);
+      dispatch(updateDatabaseInfo());
+      setGraphingDim(dimension);
+      setGraphingMatric(matric);
+      setTimeout(() => {
+        setTableVisible(true);
+    }, 100) 
+    
       
     }else{
       setTableVisible(false);
@@ -115,7 +90,7 @@ export default function MainPage(ref) {
                 <FileAddOutlined />
             </div>
             <div>
-                DataBase Name
+                DataBase Name 
             </div>
         </div>
         <div className='searchBoxWrapper'>
@@ -146,10 +121,20 @@ export default function MainPage(ref) {
                 <SearchOutlined /> 查询
               </Button>
             {tableVisible  &&
-              graphCreator()
+              <ValueGraph dimension={graphingDim} matric={graphingMatric} graphType={graphType} />
             }
             </div>
           </div>
         </div>
   )
 }
+const mapStateToProps = (state) => {
+  return {
+    allDimensions: state.dataBaseInfo.dimensionList.map(value => value.name),
+    allMatrics: state.dataBaseInfo.matricList.map(value => value.name)
+    
+  }
+
+}
+
+export default connect(mapStateToProps)(MainPage);
