@@ -29,18 +29,35 @@ const LoginDB = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-        <Form.Item
-        label="Host"
-        name="Host"
+
+      <Form.Item
+        label="key"
+        name="key"
         rules={[
           {
             required: true,
-            message: 'Please input your host!',
+            message: 'Please input your key!',
           },
         ]}
       >
         <Input />
       </Form.Item>
+
+
+      <Form.Item
+        label="Host"
+        name="Host"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your url!',
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+
 
       <Form.Item
         label="Port"
@@ -49,6 +66,19 @@ const LoginDB = () => {
           {
             required: true,
             message: 'Please input your port!',
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="dataName"
+        name="dataName"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your dataBaseName!',
           },
         ]}
       >
@@ -80,7 +110,20 @@ const LoginDB = () => {
       >
         <Input.Password />
       </Form.Item>
-      
+
+      <Form.Item
+        label="dataType"
+        name="dataType"
+        rules={[
+          {
+            required: true,
+            message: 'Please input your dataType!',
+          },
+        ]}
+      >
+        <Input.Password />
+      </Form.Item>
+
 
       <Form.Item
         name="remember"
