@@ -132,15 +132,23 @@ function MainPage({dispatch, allDimensions,allMatrics}) {
   )
 }
 const mapStateToProps = (state) => {
-  let tempDimList = state.dataBaseInfo.dimensionList;
-  let tempMatList = state.dataBaseInfo.matricList;
+  const baseData = state.dataBaseInfo;
+  let tempDimList = baseData.dimensionList && baseData.dimensionList;
+  let tempMatList = baseData.metricList &&  baseData.metricList;  
+  console.log('baseData===',baseData)
+  console.log('tempDimList===',tempDimList)
+  console.log('tempMatList===',tempMatList)
   return {
     allDimensions: tempDimList? tempDimList.map(value => value.name) : [],
     
     allMatrics: tempMatList? tempMatList.map(value => value.name) : [],
     
   }
-
+  
+  console.log('state==',state)
+  // console.log('tempDimList==',tempDimList)
+  // console.log('tempDimList==',tempDimList)
+ 
 }
 
 export default connect(mapStateToProps)(MainPage);

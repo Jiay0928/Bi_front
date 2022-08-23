@@ -85,7 +85,7 @@ import {GET_DATABASE_INFO, GET_GRAPHDATA, GET_DATABASE_INFO_START, GET_GRAPHDATA
     
 // }
 const initialState = {
-    dataSetId: -1, 
+    dataSetId: 1128308738, 
     dataBaseInfoLoading: false,
     dataLoading: false,
     analyticDataLoading: false,
