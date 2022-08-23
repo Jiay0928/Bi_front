@@ -16,12 +16,17 @@ function MainPage({dispatch, allDimensions,allMatrics}) {
   const [graphingDim, setGraphingDim] = useState("");
   const [graphingMatric, setGraphingMatric] = useState([]);
   const [graphType, setGraphType] = useState(0);
-  const [shownDimensions, setShownDimensions] = useState(allDimensions);
-  const [shownMatrics, setShownMatrics] = useState(allMatrics);
+  const [shownDimensions, setShownDimensions] = useState();
+  const [shownMatrics, setShownMatrics] = useState();
   const [tableVisible, setTableVisible] = useState(false);
   useEffect(() => {
-    dispatch(updateDatabaseInfo());
+    dispatch(updateDatabaseInfo()); 
   }, []);
+  useEffect(() => {
+    setShownDimensions(allDimensions);
+    setShownMatrics(allMatrics)
+  }, [allMatrics,allDimensions]);
+  
   
   
   // handle selected values
