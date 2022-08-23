@@ -15,12 +15,13 @@ export const updateDatabaseInfo = ()  => {
     
     return function(dispatch, getState) {
         const {dataSetId} = getState();
-        axios.get(`http://127.0.0.1:4523/m1/1455832-0-default/api/v1/dataset/info${dataSetId}`, {method: 'GET'}).then(
+        axios.get(`http://127.0.0.1:8081/api/v1/dataset/info/${dataSetId}`, {method: 'GET'}).then(
             (response => {
+                console.log(response)
                 if (response.status === 200 ){
                 dispatch({
                     type: GET_DATABASE_INFO,
-                    payload: response.data
+                    payload: response.data.data
                     
                 })}else{
                     console.log('get Database Info', response.status)
@@ -97,7 +98,7 @@ export const updateAnalyticData = (dimension, matric)  => {
         axios.post('http://127.0.0.1:8081/api/v1/query', 
             {
                 data: {
-                    tableName: dimension,
+                    tableName: stock_day,
                     dataSetId,
                     selectFields: [
                         {functionName: "max", functionField: matric},
