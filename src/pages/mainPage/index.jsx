@@ -69,9 +69,10 @@ function MainPage({dispatch, allDimensions,allMatrics}) {
   //  handle if table is visible 
   let tableVisibilityHandler = () => {
     if ((dimension !== "") && (matric.length !== 0)){
-      dispatch(updateGraphData());
+      
       setGraphingDim(dimension);
       setGraphingMatric(matric);
+      dispatch(updateGraphData(dimension,matric));
       setTimeout(() => {
         setTableVisible(true);
     }, 10) 
@@ -134,6 +135,7 @@ function MainPage({dispatch, allDimensions,allMatrics}) {
 const mapStateToProps = (state) => {
   let tempDimList = state.dataBaseInfo.dimensionList;
   let tempMatList = state.dataBaseInfo.matricList;
+  console.log(tempDimList)
   return {
     allDimensions: tempDimList? tempDimList.map(value => value.name) : [],
     
