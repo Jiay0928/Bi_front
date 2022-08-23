@@ -1,11 +1,11 @@
-import React,{useState} from 'react';
+import React from 'react';
 import "./index.less";
 import { Tooltip, Tabs} from 'antd';
 import {graphName} from "./../../../../models/common";
 import {connect} from 'react-redux';
+import {updateAnalyticData} from '../../../../redux/action';
 
-function GraphSettingSideBar({imgList,selectedGraphIndex, setSelectedGraphIndex, analysisData, functionList}) {
-  const [getAnalysis, setGetAnalysis] = useState(false);
+function GraphSettingSideBar({dispatch, imgList,selectedGraphIndex, setSelectedGraphIndex, analysisData, functionList}) {
   const { TabPane } = Tabs;
   let graphButtonCreator = (img, index) => {
       return <div key={index} className={"graphButton " + ((selectedGraphIndex === index)? "selectedButton" : "") }
@@ -15,20 +15,21 @@ function GraphSettingSideBar({imgList,selectedGraphIndex, setSelectedGraphIndex,
           </Tooltip>
       </div>
   }
-
+  //  dispatch action for getting analytic data
   let clickHandler = () => {
+    dispatch(updateAnalyticData());
     
 
   }
-  let valueContainerCreator = (title, key) => {
+  let valueContainerCreator = (title, index) => {
     return (
-    <div className="valueWrapper">
+    <div className="valueWrapper" key={index}>
       <div className="valueTitle">
           {title} 
       </div>
       
       {analysisData && <div>
-        {analysisData[key]}
+        {analysisData[index]}
         
       </div>}
    </div>)
@@ -47,7 +48,7 @@ function GraphSettingSideBar({imgList,selectedGraphIndex, setSelectedGraphIndex,
               </div>
             </TabPane>
            <TabPane tab="分析" key="2" onClick = {clickHandler}>
-             {functionList.map((value,index) => valueContainerCreator(value.name, index))}
+             {functionList && functionList.map((value,index) => valueContainerCreator(value.name, index))}
              
            </TabPane>
        </Tabs>
@@ -57,7 +58,7 @@ function GraphSettingSideBar({imgList,selectedGraphIndex, setSelectedGraphIndex,
 
 const mapStateToProps = (state) => {
   return {
-    functionList : state.dataBaseInfo.functionList
+    functionList : state.dataBaseInfo.functionList,
   }
 }
 

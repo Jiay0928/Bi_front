@@ -7,7 +7,7 @@ import GraphSettingSideBar from './component/graphSettingSideBar';
 import { tableImgList } from '../../assets/tableIcons';
 import ValueGraph from './component/valueGraph';
 import {connect} from 'react-redux';
-import {updateDatabaseInfo} from "./../../redux/action"
+import {updateDatabaseInfo, updateGraphData} from "./../../redux/action"
 
 
 function MainPage({dispatch, allDimensions,allMatrics}) {
@@ -19,7 +19,9 @@ function MainPage({dispatch, allDimensions,allMatrics}) {
   const [shownDimensions, setShownDimensions] = useState(allDimensions);
   const [shownMatrics, setShownMatrics] = useState(allMatrics);
   const [tableVisible, setTableVisible] = useState(false);
-  
+  useEffect(() => {
+    dispatch(updateDatabaseInfo());
+  }, []);
   
   
   // handle selected values
@@ -67,16 +69,17 @@ function MainPage({dispatch, allDimensions,allMatrics}) {
   //  handle if table is visible 
   let tableVisibilityHandler = () => {
     if ((dimension !== "") && (matric.length !== 0)){
-      dispatch(updateDatabaseInfo());
+      dispatch(updateGraphData());
       setGraphingDim(dimension);
       setGraphingMatric(matric);
       setTimeout(() => {
         setTableVisible(true);
-    }, 100) 
+    }, 10) 
     
       
     }else{
       setTableVisible(false);
+      alert("请至少选择一个维度和一个指标。")
     }
 
   }
@@ -129,9 +132,12 @@ function MainPage({dispatch, allDimensions,allMatrics}) {
   )
 }
 const mapStateToProps = (state) => {
+  let tempDimList = state.dataBaseInfo.dimensionList;
+  let tempMatList = state.dataBaseInfo.matricList;
   return {
-    allDimensions: state.dataBaseInfo.dimensionList.map(value => value.name),
-    allMatrics: state.dataBaseInfo.matricList.map(value => value.name)
+    allDimensions: tempDimList? tempDimList.map(value => value.name) : [],
+    
+    allMatrics: tempMatList? tempMatList.map(value => value.name) : [],
     
   }
 

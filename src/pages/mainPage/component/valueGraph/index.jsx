@@ -1,14 +1,14 @@
-import React,{useEffect, useRef} from 'react';
+import React from 'react';
 import ReactEcharts from "echarts-for-react"; 
 import ValueTable from '../valueTable';
 import GraphDataFormater from '../../../../util/graphDataFormater';
 import { dimensionToColumn, dataToRow } from '../../../../util/util';
-import { dataList } from '../../../../models/fakeData';
-import store from '../../../../redux/store';
+// import { dataList } from '../../../../models/fakeData';
+// import store from '../../../../redux/store';
 import {connect} from 'react-redux';
 
 
-function ValueGraph({graphType, matric, dimension}) {
+function ValueGraph({graphType, matric, dimension, dataList}) {
   let optionCreator = () => {
     let graphDataFormater = new GraphDataFormater(dataList, matric, dimension);
     switch(graphType){
@@ -44,7 +44,7 @@ function ValueGraph({graphType, matric, dimension}) {
 }
 
 const mapStateToProps = (state) => {
-  return {dataList: state.data.data,}
+  return {dataList: state.graphData,}
 }
 
 export default connect(mapStateToProps)(ValueGraph);
