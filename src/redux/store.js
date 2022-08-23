@@ -89,42 +89,8 @@ const initialState = {
     dataBaseInfoLoading: false,
     dataLoading: false,
     analyticDataLoading: false,
-    dataBaseInfo: {
-                dimensionList: [
-                {
-                        name: "name",
-                        type: "String",
-                        descr: "randomStuff",
-                        isPartition: true
-                    }
-                ],
-                matricList: [
-                    {
-                        name: "age",
-                        type: "Int",
-                        descr: "randomStuff",
-                        isPartition: true
-                    },
-                    {
-                        name: "salary",
-                        type: "Int",
-                        descr: "randomStuff",
-                        isPartition: true
-                    }
-                ],
-                functionList: [
-                    {
-                        name: "求和",
-                        value: "max",
-                    },
-                    {
-                        name: "平均值",
-                        value: "average",
-                    }
-                ],
-            },
+    dataBaseInfo: {},
     graphData: [],
-
     analyticData: []
     
     
@@ -195,7 +161,7 @@ const rootReducer = (state = initialState, action) => {
         case GET_ANALYTICDATA_FAILED:
             return {
                 ...state,
-                analyticData: {},
+                analyticData: [],
                 analyticDataLoading: false,
             }
 

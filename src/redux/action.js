@@ -45,7 +45,7 @@ export const updateGraphData = (dimension, matricList)  => {
             return  {"functionName":"sum",
                 "functionField":value}})
     
-        axios.post('https://jsonplaceholder.typicode.com/posts', 
+        axios.post('http://127.0.0.1:8081/api/v1/query', 
         {
             data: {
                 tableName: dimension,
@@ -94,7 +94,7 @@ export const updateAnalyticData = (dimension, matric)  => {
     return function(dispatch, getState) {
         const {dataSetId} = getState();
         
-        axios.post('https://jsonplaceholder.typicode.com/posts', 
+        axios.post('http://127.0.0.1:8081/api/v1/query', 
             {
                 data: {
                     tableName: dimension,
