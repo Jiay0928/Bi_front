@@ -9,6 +9,7 @@ import ValueGraph from './component/valueGraph';
 import {connect} from 'react-redux';
 import {updateDatabaseInfo, updateGraphData} from "./../../redux/action"
 
+import SelectDb from './component/selectDatabase/selectDb';
 
 function MainPage({dispatch, allDimensions,allMatrics}) {
   const [dimension, setDimension] = useState("");
@@ -96,7 +97,7 @@ function MainPage({dispatch, allDimensions,allMatrics}) {
         <div className='dataBaseInfoWrapper'>
             <div className='dataBaseInfoTop'>
                 数据集
-                <FileAddOutlined />
+                <SelectDb/>
             </div>
             <div>
                 DataBase Name 
