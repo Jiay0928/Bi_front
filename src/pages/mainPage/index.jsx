@@ -9,6 +9,7 @@ import ValueGraph from './component/valueGraph';
 import {connect} from 'react-redux';
 import {updateDatabaseInfo, updateGraphData} from "./../../redux/action"
 
+import SelectDbDiv from './component/selectDatabase';
 
 function MainPage({dispatch, allDimensions,allMatrics}) {
   const [dimension, setDimension] = useState("");
@@ -16,8 +17,8 @@ function MainPage({dispatch, allDimensions,allMatrics}) {
   const [graphingDim, setGraphingDim] = useState("");
   const [graphingMatric, setGraphingMatric] = useState([]);
   const [graphType, setGraphType] = useState(0);
-  const [shownDimensions, setShownDimensions] = useState();
-  const [shownMatrics, setShownMatrics] = useState();
+  const [shownDimensions, setShownDimensions] = useState([]);
+  const [shownMatrics, setShownMatrics] = useState([]);
   const [tableVisible, setTableVisible] = useState(false);
   useEffect(() => {
     dispatch(updateDatabaseInfo()); 
@@ -29,7 +30,6 @@ function MainPage({dispatch, allDimensions,allMatrics}) {
     console.log(allDimensions);
 
   }, [allMatrics,allDimensions]);
-  
   
   
   // handle selected values
@@ -99,7 +99,7 @@ function MainPage({dispatch, allDimensions,allMatrics}) {
         <div className='dataBaseInfoWrapper'>
             <div className='dataBaseInfoTop'>
                 数据集
-                <FileAddOutlined />
+                <SelectDbDiv/>
             </div>
             <div>
                 DataBase Name 
