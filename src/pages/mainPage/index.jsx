@@ -22,9 +22,12 @@ function MainPage({dispatch, allDimensions,allMatrics}) {
   useEffect(() => {
     dispatch(updateDatabaseInfo()); 
   }, []);
+
   useEffect(() => {
     setShownDimensions(allDimensions);
-    setShownMatrics(allMatrics)
+    setShownMatrics(allMatrics);
+    console.log(allDimensions);
+
   }, [allMatrics,allDimensions]);
   
   
