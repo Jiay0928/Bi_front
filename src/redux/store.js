@@ -85,7 +85,7 @@ import {GET_DATABASE_INFO, GET_GRAPHDATA, GET_DATABASE_INFO_START, GET_GRAPHDATA
     
 // // }
 const initialState = {
-    dataSetId: 1128308738, 
+    dataSetId: "1562465579112198145", 
     dataBaseInfoLoading: false,
     dataLoading: false,
     analyticDataLoading: false,
@@ -126,6 +126,7 @@ const rootReducer = (state = initialState, action) => {
 
         //  graphdata
         case GET_GRAPHDATA:
+            console.log("action.payload------",action.payload)
             return {
                ...state,
                graphData: action.payload,
@@ -174,11 +175,8 @@ const rootReducer = (state = initialState, action) => {
     }
 }
 
-
-
-
 const store = createStore(rootReducer, applyMiddleware(thunk));
 store.subscribe(() => {
-    console.log(store.getState())
+    // console.log(store.getState())
 })
 export default store;
