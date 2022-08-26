@@ -12,17 +12,17 @@ export const GET_ANALYTICDATA = 'GET_ANALYTICDATA';
 export const GET_ANALYTICDATA_FAILED = 'GET_ANALYTICDATA_FAILED';
 
 export const updateDatabaseInfo = ()  => {
-    
+
     return function(dispatch, getState) {
         const {dataSetId} = getState();
         axios.get(`http://127.0.0.1:8081/api/v1/dataset/info/${dataSetId}`, {method: 'GET'}).then(
             (response => {
                 console.log(response)
                 if (response.status === 200 ){
-                dispatch({
-                    type: GET_DATABASE_INFO,
-                    payload: response.data.data
-                    
+                    dispatch({
+                        type: GET_DATABASE_INFO,
+                        payload: response.data.data
+
                 })}else{
                     console.log('get Database Info', response.status)
                     dispatch({
@@ -31,7 +31,7 @@ export const updateDatabaseInfo = ()  => {
                 }
 
             })
-        ).catch (
+        ).catch(
             err => {
                 console.log("updateDatabaseInfoFailed", err);
             }
@@ -39,102 +39,92 @@ export const updateDatabaseInfo = ()  => {
     }
 }
 
-export const updateGraphData = (dimension, matricList)  => {
-    return function(dispatch, getState) {
-        const {dataSetId} = getState();
+export const updateGraphData = (dimension, matricList) => {
+    return function (dispatch, getState) {
+        const { dataSetId } = getState();
         let selectFields = matricList.map(value => {
-            return  {"functionName":"sum",
-                "functionField":value}})
-    
-        axios.post('http://127.0.0.1:8081/api/v1/query', 
-        {
-            data: {
-                tableName: dimension,
-                dataSetId,
-                cache: true,
-                selectFields,
-                groupByField: dimension,
-                orderByField: null,
-                orderStyle: null,
+            return {
+                "functionName": "avg",
+                "functionField": value
             }
         })
-        .then(
-            (response => {
-                if (response.status === 200 ){
-                    dispatch({
-                        type: GET_GRAPHDATA,
-                        payload: response.data
-                        
-                    })
+        axios.post('http://127.0.0.1:8081/api/v1/query',
+            {
+                    tableName: "stock_day",
+                    dimensionField:dimension,
+                    dataSetId,
+                    cache: true,
+                    selectFields,
+                    groupByField: dimension,
+                    orderByField: dimension,
+                    orderStyle: "asc",
+            })
+            .then(
+                (response => {
+                    if (response.status === 200) {
+                        console.log('response.data===', response.data.data)
+                        dispatch({
+                            type: GET_GRAPHDATA,
+                            payload: response.data.data
 
-                }else{
-                    console.log("updateGraphDataFailed", response.status);
+                        })
+                    } else {
+                        console.log("updateGraphDataFailed", response.status);
+                        dispatch({
+                            type: GET_GRAPHDATA_FAILED,
+                            payload: {}
+                        });
+                    }
+
+
+                })
+            ).catch(
+                err => {
+                    console.log("updateGraphDataFailed", err);
                     dispatch({
                         type: GET_GRAPHDATA_FAILED
                     });
                 }
-                
-
-            })
-        ).catch(
-            err => {
-                console.log("updateGraphDataFailed", err);
-                dispatch({
-                type: GET_GRAPHDATA_FAILED
-                });
-            }
-        )
-            
-
-        
-        
-        
+            )
     }
 }
-export const updateAnalyticData = (dimension, matric)  => {
-    return function(dispatch, getState) {
-        const {dataSetId} = getState();
+export const updateAnalyticData = (dimension, matric) => {
+    return function (dispatch, getState) {
+        const { dataSetId } = getState();
         
-        axios.post('http://127.0.0.1:8081/api/v1/query', 
+        axios.post('http://127.0.0.1:8081/api/v1/query',
             {
-                data: {
-                    tableName: stock_day,
-                    dataSetId,
-                    selectFields: [
-                        {functionName: "max", functionField: matric},
-                        {functionName: "avg", functionField: matric},
-                        {functionName: "min", functionField: matric},
-                        {functionName: "sum", functionField: matric},
-                    ],
-                    groupByField: null,
-                    orderByField: null,
-                    orderStyle: null,
-
-                }
-            
-        
+                tableName: "stock_day",
+                dataSetId,
+                dimensionField:dimension,
+                selectFields: [
+                    { functionName: "max", functionField: matric },
+                    { functionName: "avg", functionField: matric },
+                    { functionName: "min", functionField: matric },
+                    { functionName: "sum", functionField: matric },
+                ],
+                groupByField: dimension,
+                orderByField: dimension,
+                orderStyle: 'asc',
             }).then(
-            (response => {
-                if (response.status === 200) {
-                    dispatch({
-                        type: GET_ANALYTICDATA,
-                        payload: response.data
-                        
-                    });
-                }else {
-                    console.log("update Analytic Data Failed", response.status);
-                    dispatch({
-                        type: GET_ANALYTICDATA_FAILED
-                    });
+                (response => {
+                    if (response.status === 200) {
+                        dispatch({
+                            type: GET_ANALYTICDATA,
+                            payload: response.data.data
+                        });
+                    } else {
+                        console.log("update Analytic Data Failed", response.status);
+                        dispatch({
+                            type: GET_ANALYTICDATA_FAILED
+                        });
+                    }
+                })
+            ).catch(
+                err => {
+                    console.log("UpdateAnalyticDataFailed", err);
                 }
-                
-
-            })
-        ).catch(
-            err => {
-                console.log("UpdateAnalyticDataFailed", err);
-            }
-        )
+            )
     }
 }
 

@@ -28,7 +28,7 @@ function ValueGraph({graphType, matric, dimension, dataList}) {
         return null
     }
   }
-    
+    console.log("dataList-----------"+dataList)
   return (
     <>
     {
@@ -42,7 +42,6 @@ function ValueGraph({graphType, matric, dimension, dataList}) {
   </>
   );
 }
-
 const mapStateToProps = (state) => {
   return {dataList: state.graphData,}
 }
