@@ -48,7 +48,10 @@ export default function selectDbDiv(){
         {optionList.map((value, index) => {
           
           return (
-          <div key={index} className={'dbTypeContainer ' + (index === selectIndex ? 'selectedDb' : "")} onClick={() => {handleSelect(index); event.target.innerHTML==="clickHouse"?formhandleShow():null}}>
+          <div key={index} className={'dbTypeContainer ' + (index === selectIndex ? 'selectedDb' : "")} onClick={() => {handleSelect(index); 
+          
+          // event.target.innerHTML==="clickHouse"?formhandleShow():null
+          }}>
             {value}
           </div>
           )
