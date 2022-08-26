@@ -86,26 +86,26 @@ export default function selectDbDiv(){
 
   }
   
-  const showModal = async(key,url,port,dataName,username,password,dataType) => {
-    let switchData = await switchDataSource(key,url,port,dataName,username,password,dataType);
-    if (switchData.status === 200){
-      getDataBaseType().then(
-        response => {
-          if (response.status === 200) {
-            setDBType(response.data.data);
-            setVisible(true);
-          }
-        })
+  // const showModal = async(key,url,port,dataName,username,password,dataType) => {
+  //   let switchData = await switchDataSource(key,url,port,dataName,username,password,dataType);
+  //   if (switchData.status === 200){
+  //     getDataBaseType().then(
+  //       response => {
+  //         if (response.status === 200) {
+  //           setDBType(response.data.data);
+  //           setVisible(true);
+  //         }
+  //       })
   
-        .catch((err) => {
-          console.log('getDataBaseType', err)
-          // setVisible(true)
-          }
-        ) 
+  //       .catch((err) => {
+  //         console.log('getDataBaseType', err)
+  //         // setVisible(true)
+  //         }
+  //       ) 
 
-    }
+  //   }
     
-  };
+  // };
      const formhandleShow = () => {
 		setFormVisible(true);
   };
@@ -125,15 +125,15 @@ export default function selectDbDiv(){
       setVisible(false);
 	  let $$=(id)=>{return document.getElementById(id+"Value")?.value}
       switchDataSource($$("key"),$$("url"),$$("port"),$$("dataName"),$$("username"),$$("password"),$$("dataType"))
-      getDataBaseName().then(response => {
+      getDataBaseType().then(response => {
         if (response.status === 200) {
-          setName(response.data.data);
-          setNameModalVisible(true);
+          setDBType(response.data.data);
+          setVisible(true);
         }
       })
       .catch((err) => {
         console.log('getDataBaseType', err);
-        setNameModalVisible(true);
+        // setNameModalVisible(true);
         }
       ) 
   
@@ -161,7 +161,7 @@ export default function selectDbDiv(){
 
   return (
     <>
-      <div type="primary" onClick={showModal} style={{cursor: 'pointer'}}>
+      <div type="primary" onClick={handleOk} style={{cursor: 'pointer'}}>
         <SwapOutlined />
       </div>
 	  
