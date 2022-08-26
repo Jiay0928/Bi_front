@@ -44,13 +44,13 @@ export const updateGraphData = (dimension, matricList) => {
         const { dataSetId } = getState();
         let selectFields = matricList.map(value => {
             return {
-                "functionName": "avg",
+                "functionName": "sum",
                 "functionField": value
             }
         })
         axios.post('http://127.0.0.1:8081/api/v1/query',
             {
-                    tableName: "stock_day",
+                    tableName: "pay_info",
                     dimensionField:dimension,
                     dataSetId,
                     cache: true,
@@ -94,7 +94,7 @@ export const updateAnalyticData = (dimension, matric) => {
         
         axios.post('http://127.0.0.1:8081/api/v1/query',
             {
-                tableName: "stock_day",
+                tableName: "pay_info",
                 dataSetId,
                 dimensionField:dimension,
                 selectFields: [
