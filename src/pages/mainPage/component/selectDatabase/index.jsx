@@ -15,7 +15,7 @@ export default function selectDbDiv(){
   
   
   const [modalTypeIndex, setModalTypeIndex] = useState(0);
-  const [allDBType, setDBType] = useState([{dataType: 'clickHouse'}]);
+  const [allDBType, setDBType] = useState([]);
   
   
   const [nameModalVisible, setNameModalVisible] = useState(false);
@@ -23,7 +23,7 @@ export default function selectDbDiv(){
   const [formVisible,setFormVisible]= useState(false);
   
   const [nameIndex, setnameIndex] = useState(0);
-  const [allName, setName] = useState(['dada','ddddassa']);
+  const [allName, setName] = useState([]);
   const [tableModalVisible, setTableModalVisible] = useState(false);
   
 //  const [key, setIKey] = useState('');
@@ -48,7 +48,7 @@ export default function selectDbDiv(){
         {optionList.map((value, index) => {
           
           return (
-          <div key={index} className={'dbTypeContainer ' + (index === selectIndex ? 'selectedDb' : "")} onClick={() => {handleSelect(index);event.target.innerHTML==="clickHouse"?formhandleShow():null}}>
+          <div key={index} className={'dbTypeContainer ' + (index === selectIndex ? 'selectedDb' : "")} onClick={() => {handleSelect(index); event.target.innerHTML==="clickHouse"?formhandleShow():null}}>
             {value}
           </div>
           )
@@ -158,14 +158,14 @@ export default function selectDbDiv(){
 
   return (
     <>
-      <div type="primary" onClick={show} style={{cursor: 'pointer'}}>
+      <div type="primary" onClick={showModal} style={{cursor: 'pointer'}}>
         <SwapOutlined />
       </div>
 	  
       {modalCreator(allDBType.map(value => value.dataType), "数据源选择", visible, handleOk, handleCancel, setModalTypeIndex, modalTypeIndex)}
       {modalCreator(allName, "数据库选择", nameModalVisible, handleNameSelectOk, handleNameSelectCancel, setnameIndex, nameIndex)}
 	  {formCreator2("数据源信息",formVisible,formhandleOk,formhandleOk,0)}
-	  <SelectTableNameModal visible={tableModalVisible} setVisibility={setTableModalVisible} datasourceType={allDBType[modalTypeIndex].dataType} dbName={allName[nameIndex]}/>
+	  <SelectTableNameModal visible={tableModalVisible} setVisibility={setTableModalVisible} datasourceType={allDBType[modalTypeIndex]?.dataType} dbName={allName[nameIndex]}/>
     </>
   );
 };
