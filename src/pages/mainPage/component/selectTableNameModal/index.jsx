@@ -98,6 +98,7 @@ export default function SelectTableNameModal({dispatch, visible, setVisibility,d
   };
 
   useEffect(() => {
+	  console.log(88,datasourceType, dbName)
     getTableList(datasourceType, dbName).then(
       (response) => {
         if (response.status === 200){
