@@ -28,7 +28,7 @@ export default function SelectTableNameModal({dispatch, visible, setVisibility,d
   }
   let handleOk = async() => { 
       let payload = {
-        "name": '新建数据集',
+        "name": '测试',
         "descr":"数据集描述",
         "dataSourceType": datasourceType,
         "dbName":dbName,
@@ -47,7 +47,8 @@ export default function SelectTableNameModal({dispatch, visible, setVisibility,d
         if (response.status === 200) {
             dispatch({
               action: SET_DATASETID,
-              payload: response.data.dataSetId,}
+              payload: response.data.dataSetId
+            }
             )
             dispatch(updateDatabaseInfo())
         }
@@ -75,6 +76,7 @@ export default function SelectTableNameModal({dispatch, visible, setVisibility,d
       if (items[key].children.length === 0){
         let tableName = items[key].label;
         try{
+          console.log("response---->",response)
         let response = await getTableInfo(datasourceType, dbName,tableName);
         if (response.status === 200){
           let children = response.data.data;
@@ -96,6 +98,7 @@ export default function SelectTableNameModal({dispatch, visible, setVisibility,d
   };
 
   useEffect(() => {
+	  console.log(88,datasourceType, dbName)
     getTableList(datasourceType, dbName).then(
       (response) => {
         if (response.status === 200){
@@ -110,7 +113,7 @@ export default function SelectTableNameModal({dispatch, visible, setVisibility,d
     )
   }, [])
 
-  
+  console.log("数据字段",selectName)
   return (
     <Modal 
       title= "选择数据"
