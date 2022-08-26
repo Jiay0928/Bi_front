@@ -165,7 +165,7 @@ export default function selectDbDiv(){
       {modalCreator(allDBType.map(value => value.dataType), "数据源选择", visible, handleOk, handleCancel, setModalTypeIndex, modalTypeIndex)}
       {modalCreator(allName, "数据库选择", nameModalVisible, handleNameSelectOk, handleNameSelectCancel, setnameIndex, nameIndex)}
 	  {formCreator2("数据源信息",formVisible,formhandleOk,formhandleOk,0)}
-	  <SelectTableNameModal visible={tableModalVisible} setVisibility={setTableModalVisible}/>
+	  <SelectTableNameModal visible={tableModalVisible} setVisibility={setTableModalVisible} datasourceType={allDBType[modalTypeIndex].dataType} dbName={allName[nameIndex]}/>
     </>
   );
 };
