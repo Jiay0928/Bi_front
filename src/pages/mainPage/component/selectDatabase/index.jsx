@@ -15,7 +15,7 @@ export default function selectDbDiv(){
   
   
   const [modalTypeIndex, setModalTypeIndex] = useState(0);
-  const [allDBType, setDBType] = useState([{dataType: 'clickHouse'}]);
+  const [allDBType, setDBType] = useState([]);
   
   
   const [nameModalVisible, setNameModalVisible] = useState(false);
@@ -23,7 +23,7 @@ export default function selectDbDiv(){
   const [formVisible,setFormVisible]= useState(false);
   
   const [nameIndex, setnameIndex] = useState(0);
-  const [allName, setName] = useState(['dada','ddddassa']);
+  const [allName, setName] = useState([]);
   const [tableModalVisible, setTableModalVisible] = useState(false);
   
 //  const [key, setIKey] = useState('');
