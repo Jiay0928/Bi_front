@@ -3,7 +3,8 @@ import React, { useState} from 'react';
 import 'antd/dist/antd.css';
 import {  Modal } from 'antd';
 import {SwapOutlined } from '@ant-design/icons';
-import {getDataBaseType, getDataBaseName, getTableList, switchDataSource} from './model'
+import {getDataBaseType, getDataBaseName, switchDataSource} from './model'
+import { getTableList } from '../selectTableNameModal/model';
 import "./index.less";
 import SelectTableNameModal from '../selectTableNameModal';
 
@@ -13,7 +14,7 @@ export default function selectDbDiv(){
   const [allDBType, setDBType] = useState([{dataType: 'clickHouse'},{dataType: 'clickHouse'}]);
   const [nameModalVisible, setNameModalVisible] = useState(false);
   const [nameIndex, setnameIndex] = useState(0);
-  const [allName, setName] = useState(['lol','wtef']);
+  const [allName, setName] = useState(['dada','ddddassa']);
   const [tableModalVisible, setTableModalVisible] = useState(false);
   
 
@@ -41,7 +42,7 @@ export default function selectDbDiv(){
   
   const showModal = async() => {
     let switchData = await switchDataSource();
-    if (switchData.response === 200){
+    if (switchData.status === 200){
       getDataBaseType().then(
         response => {
           if (response.status === 200) {
@@ -76,7 +77,7 @@ export default function selectDbDiv(){
       })
       .catch((err) => {
         console.log('getDataBaseType', err);
-        // setNameModalVisible(true);
+        setNameModalVisible(true);
         }
       ) 
   
