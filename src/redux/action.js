@@ -17,7 +17,6 @@ export const updateDatabaseInfo = ()  => {
         const {dataSetId} = getState();
         axios.get(`http://127.0.0.1:8081/api/v1/dataset/info/${dataSetId}`, {method: 'GET'}).then(
             (response => {
-                console.log(response)
                 if (response.status === 200 ){
                     dispatch({
                         type: GET_DATABASE_INFO,

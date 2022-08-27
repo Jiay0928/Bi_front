@@ -112,8 +112,6 @@ export default function SelectTableNameModal({dispatch, visible, setVisibility,d
       }
     )
   }, [])
-
-  console.log("数据字段",selectName)
   return (
     <Modal 
       title= "选择数据"
