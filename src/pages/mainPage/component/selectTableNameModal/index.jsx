@@ -4,7 +4,7 @@ import { DatabaseOutlined} from '@ant-design/icons';
 import {getTableList, getTableInfo, getDataSetId} from './model';
 import {SET_DATASETID, updateDatabaseInfo} from '../../../../redux/action';
 import './index.less'
-export default function SelectTableNameModal({dispatch, visible, setVisibility,datasourceType, dbName }) {
+export default function SelectTableNameModal({dispatch, visible, setVisibility,datasourceType, dbName,tableList }) {
   const [selectName, setSelectName] = useState([]);
   const [items, setItems] = useState([]);
   const [parent, setParent] = useState("");
@@ -96,14 +96,11 @@ export default function SelectTableNameModal({dispatch, visible, setVisibility,d
       }
      }
   };
-
   useEffect(() => {
-	  console.log(88,datasourceType, dbName)
     getTableList(datasourceType, dbName).then(
       (response) => {
         if (response.status === 200){
-          let allTables = response.data.data;
-          let tempItems = allTables.map(
+          let tempItems = tableList.map(
             (value, index) => 
             getItem(value, index, <DatabaseOutlined />, [] ))
             setItems(tempItems)
@@ -127,13 +124,13 @@ export default function SelectTableNameModal({dispatch, visible, setVisibility,d
           style={{
             width: 256,
           }}
-          items={items}
+          items={tableList}
           multiple={true}
           onSelect={onSelect}
           onDeselect={onDeselect}
           
         />
-        <div className='selectContainer'>
+        {/* <div className='selectContainer'>
             {selectName.map(value => {
               return (
                 <div>
@@ -141,7 +138,7 @@ export default function SelectTableNameModal({dispatch, visible, setVisibility,d
                 </div>
               )
             })}
-          </div>
+          </div> */}
       </div>
       
     

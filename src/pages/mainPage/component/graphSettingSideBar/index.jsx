@@ -3,7 +3,7 @@ import "./index.less";
 import { Tooltip, Tabs} from 'antd';
 import {graphName} from "./../../../../models/common";
 import {connect} from 'react-redux';
-import {updateAnalyticData} from '../../../../redux/action';
+import {updateAnalyticData,updateGraphData} from '../../../../redux/action';
 
 function GraphSettingSideBar({dispatch, imgList,selectedGraphIndex, setSelectedGraphIndex, analysisData, functionList}) {
   const { TabPane } = Tabs;
@@ -18,13 +18,12 @@ function GraphSettingSideBar({dispatch, imgList,selectedGraphIndex, setSelectedG
   //  dispatch action for getting analytic data
   let clickHandler = () => {
     dispatch(updateAnalyticData());
-    
 
   }
   let valueContainerCreator = (title, index) => {
     return (
     <div className="valueWrapper" key={index}>
-      <div className="valueTitle">
+      <div className="valueTitle" onClick={() => eventClikc(title,index)}>
           {title} 
       </div>
       
@@ -34,6 +33,11 @@ function GraphSettingSideBar({dispatch, imgList,selectedGraphIndex, setSelectedG
       </div>}
    </div>)
     
+  }
+  let eventClikc = (title,index) => {
+    console.log(title,index)
+    // if(title)
+    // updateGraphData()
   }
 
   return (
@@ -49,7 +53,6 @@ function GraphSettingSideBar({dispatch, imgList,selectedGraphIndex, setSelectedG
             </TabPane>
            <TabPane tab="分析" key="2" onClick = {clickHandler}>
              {functionList && functionList.map((value,index) => valueContainerCreator(value.name, index))}
-             
            </TabPane>
        </Tabs>
     </div>

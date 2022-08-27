@@ -38,12 +38,12 @@ export const updateDatabaseInfo = ()  => {
     }
 }
 
-export const updateGraphData = (dimension, matricList) => {
+export const updateGraphData = (dimension, matricList,type = "avg") => {
     return function (dispatch, getState) {
         const { dataSetId } = getState();
         let selectFields = matricList.map(value => {
             return {
-                "functionName": "sum",
+                "functionName": type,
                 "functionField": value
             }
         })

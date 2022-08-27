@@ -15,7 +15,7 @@ export default function selectDbDiv() {
 
 
   const [modalTypeIndex, setModalTypeIndex] = useState(0);
-  const [allDBType, setDBType] = useState([{ dataType: 'clickHouse' }]);
+  const [allDBType, setDBType] = useState([]);
 
 
   const [nameModalVisible, setNameModalVisible] = useState(false);
@@ -23,8 +23,12 @@ export default function selectDbDiv() {
   const [formVisible, setFormVisible] = useState(false);
 
   const [nameIndex, setnameIndex] = useState(0);
-  const [allName, setName] = useState(['dada', 'ddddassa']);
+  const [allName, setName] = useState([]);
   const [tableModalVisible, setTableModalVisible] = useState(false);
+
+  const [tableList,setTableList] = useState([]);
+
+  const [idx,setIdx] = useState(0);
 
   //  const [key, setIKey] = useState('');
   //  const [url, setUrl] = useState('');
@@ -49,7 +53,7 @@ export default function selectDbDiv() {
           return (
             
             <div key={index} className={'dbTypeContainer ' + (index === selectIndex ? 'selectedDb' : "")}
-            onClick={() => {handleSelect(index);formhandleShow()&&setFormVisible(false)}}>
+            onClick={() => {handleSelect(index),title==="数据库选择"?setIdx(index):formhandleShow()}}>
               
               {value}
             </div>
@@ -130,8 +134,15 @@ export default function selectDbDiv() {
   };
   const handleNameSelectOk = () => {
     setNameModalVisible(false);
-    getTableList().then(response => {
+    getTableList(
+      allName[idx]
+    ).then(response => {
       if (response.status === 200) {
+        let data =  response.data.data;
+        setTableList(data.map(i => {
+          i.label = i.tableName
+          return i
+        }))
         setTableModalVisible(true);
       }
 
@@ -158,8 +169,9 @@ export default function selectDbDiv() {
       {modalCreator(allDBType.map(value => value.dataType), "数据源选择", visible, handleOk, handleCancel, setModalTypeIndex, modalTypeIndex)}
       {modalCreator(allName, "数据库选择", nameModalVisible, handleNameSelectOk, handleNameSelectCancel, setnameIndex, nameIndex)}
       {formCreator2("数据源信息", formVisible, formhandleOk, formhandleOk, 0)}
-      <SelectTableNameModal visible={tableModalVisible} setVisibility={setTableModalVisible}
+      <SelectTableNameModal  visible={tableModalVisible} setVisibility={setTableModalVisible}
       datasourceType={allDBType[modalTypeIndex]?.dataType} dbName={allName[nameIndex]}
+      tableList={tableList}
       />
     </>
   );
