@@ -1,5 +1,5 @@
 
-# The frontend for a Data Analysis website that connect to differnet databases and creating different graphs for the data(ie. pie graph, bar graph, area graph) and also provide important data such as average and max.
+The frontend for a Data Analysis website that connect to differnet databases and creating different graphs for the data(ie. pie graph, bar graph, area graph) and also provide important data such as average and max.
 
 # Getting Started with Create React App
 
